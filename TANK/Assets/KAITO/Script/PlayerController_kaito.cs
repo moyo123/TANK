@@ -53,6 +53,7 @@ public class PlayerController_kaito : MonoBehaviour
             {
                 //回転させる
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toDirection), Time.deltaTime * myStatus.ROTATE_SPEED);
+                //Vector3.RotateTowards
             }
         }
     }
