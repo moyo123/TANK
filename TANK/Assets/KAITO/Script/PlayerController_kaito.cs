@@ -13,6 +13,11 @@ public class PlayerController_kaito : MonoBehaviour
     {
         myStatus = Resources.Load<StatusData>("PlayerStatus");     //リソースファイル取得
 
+        //リジッドボディの設定
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        rigidbody.useGravity = false;
+        rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+
     }
 
     // Update is called once per frame
@@ -53,7 +58,6 @@ public class PlayerController_kaito : MonoBehaviour
             {
                 //回転させる
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toDirection), Time.deltaTime * myStatus.ROTATE_SPEED);
-                //Vector3.RotateTowards
             }
         }
     }
