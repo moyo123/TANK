@@ -13,6 +13,11 @@ public class PlayerController_kaito : MonoBehaviour
     {
         myStatus = Resources.Load<StatusData>("PlayerStatus");     //リソースファイル取得
 
+        //リジッドボディの設定
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        rigidbody.useGravity = false;
+        rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+
     }
 
     // Update is called once per frame

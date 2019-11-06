@@ -4,13 +4,13 @@ using UnityEngine;
 
 using UnityEditor;
 
-public class MoveBullet : MonoBehaviour
+public class MoveBullet_kaito : MonoBehaviour
 {
 
     private static StatusData myStatus;     //リソースファイル取得用の変数
     private Vector3 Direction;          //進む方向
     private int currentNumberOfReflection;  //反射した回数を格納するための変数
-    private string parentTag;
+    private string parentTag;               //自分を撃った親のタグ名
 
     // Use this for initialization
     void Start()
@@ -19,7 +19,12 @@ public class MoveBullet : MonoBehaviour
         //リソースファイル入ってなかったら取得してくる
         if (myStatus == null)
         {
-            myStatus = Resources.Load<StatusData>("PlayerStatus");  //取得する
+            switch (parentTag)
+            {
+                case "Player":
+                    myStatus = Resources.Load<StatusData>("PlayerStatus");  //取得する
+                    break;
+            }
         }
 
         transform.LookAt(transform.position + Direction);       //進む方向に向かせる
@@ -40,9 +45,10 @@ public class MoveBullet : MonoBehaviour
 
 
     //自分が生成された時に値を設定するための関数
-    public void Initialize(Vector3 _direction)
+    public void Initialize(Vector3 _direction , string _parentTag)
     {
         Direction = _direction.normalized;  //進む方向を格納する
+        parentTag = _parentTag;             //親のタグ名を格納
     }
 
 
@@ -56,7 +62,7 @@ public class MoveBullet : MonoBehaviour
                 //反射の回数が上限を超えていない場合反射させる
                 if (currentNumberOfReflection < myStatus.MAX_NUMBER_OF_REFLECTION)
                 {
-                    Direction = Vector3.Reflect(Direction, collision.contacts[0].normal);
+                    Direction = Vector3.Reflect(Direction, collision.contacts[0].normal);   //反射した時のベクトルを求める
                     transform.LookAt(transform.position + Direction);       //進む方向に向かせる
                     transform.Rotate(90, 0, 0);//***********************************
                     currentNumberOfReflection++;        //反射の回数を１つ増やす
@@ -75,9 +81,16 @@ public class MoveBullet : MonoBehaviour
 
             case "Enemy":       //敵
                 //Debug.Log("hitEnemy");
+                Destroy(collision.gameObject);
                 Destroy(this.gameObject);            //自分のオブジェクトを消す
                 break;
 
+
+            case "Bullet":      //弾
+                Destroy(this.gameObject);           //自分のオブジェクトを消す
+
+
+                break;
 
 
         }
