@@ -14,6 +14,9 @@ public class EnemyShot : MonoBehaviour
 
     private Transform player;
 
+    Ray ray;
+    RaycastHit hit;
+
     private void Start()
     {
         // 始めにプレイヤーの位置を取得できるようにする
@@ -25,9 +28,10 @@ public class EnemyShot : MonoBehaviour
         // 砲台をプレイヤーの方向に向ける
         Quaternion targetRotation = Quaternion.LookRotation(player.position - turret.position);
         turret.rotation = Quaternion.Slerp(turret.rotation, targetRotation, Time.deltaTime * turretRotationSmooth);
+        ray = new Ray(transform.position, muzzle.position);
 
         // 一定間隔で弾丸を発射する
-        if (Time.time > lastAttackTime + attackInterval)
+        if (Time.time > lastAttackTime + attackInterval && Physics.Raycast(ray, out hit, 10f))
         {
             Instantiate(bulletPrefab, muzzle.position, muzzle.rotation);
             lastAttackTime = Time.time;

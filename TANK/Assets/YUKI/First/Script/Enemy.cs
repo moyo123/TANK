@@ -5,7 +5,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private float speed = 5f;
-    private float rotationSmooth = 1f;
+
+    private float rotationSmooth = 3f;
+    private float levelSize;
 
     private Vector3 targetPosition;
 
@@ -33,9 +35,16 @@ public class Enemy : MonoBehaviour
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            targetPosition = GetRandomPositionOnLevel();
+        }
+    }
+
     public Vector3 GetRandomPositionOnLevel()
     {
-        float levelSize = 25f;
         return new Vector3(Random.Range(-levelSize, levelSize), 0, Random.Range(-levelSize, levelSize));
     }
 }
