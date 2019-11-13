@@ -6,6 +6,7 @@ public class PlayerController_kaito : MonoBehaviour
 {
 
     private StatusData myStatus;        //リソースファイル取得用の変数
+    private Rigidbody myRigidbody;      //自分のリジッドボディ取得用の変数
 
 
     // Use this for initialization
@@ -14,9 +15,10 @@ public class PlayerController_kaito : MonoBehaviour
         myStatus = Resources.Load<StatusData>("PlayerStatus");     //リソースファイル取得
 
         //リジッドボディの設定
-        Rigidbody rigidbody = GetComponent<Rigidbody>();
-        rigidbody.useGravity = false;
-        rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        myRigidbody = GetComponent<Rigidbody>();                            //rigidbody取得
+        myRigidbody.useGravity = false;                                     //重力をオフに
+        //myRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;      //外部からの衝突で勝手に回転しないようにする
 
     }
 
@@ -33,6 +35,7 @@ public class PlayerController_kaito : MonoBehaviour
     private void FixedUpdate()
     {
         PlayerMove();   //プレイヤーの回転と移動の処理
+
 
 
     }
@@ -60,6 +63,8 @@ public class PlayerController_kaito : MonoBehaviour
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toDirection), Time.deltaTime * myStatus.ROTATE_SPEED);
             }
         }
+
+        myRigidbody.velocity = Vector3.zero;    //ぶつかった後に勝手に飛んでいかないように加速度を常に0にしておく      あんま良い方法が思いつかなかった、なんかあったら書き換えてほしい
     }
 
 
