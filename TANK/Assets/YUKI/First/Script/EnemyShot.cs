@@ -31,9 +31,9 @@ public class EnemyShot : MonoBehaviour
         // 砲台をプレイヤーの方向に向ける
         Quaternion targetRotation = Quaternion.LookRotation(player.position - turret.position);
         turret.rotation = Quaternion.Slerp(turret.rotation, targetRotation, Time.deltaTime * turretRotationSmooth);
-        ray = new Ray(new Vector3(muzzle.position.x, 1, muzzle.position.z)
+        ray = new Ray(new Vector3(transform.position.x, 2, transform.position.z)
                         , new Vector3(player.position.x - muzzle.position.x
-                        , 1
+                        , 0
                         , player.position.z - muzzle.position.z));
 
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 0);
