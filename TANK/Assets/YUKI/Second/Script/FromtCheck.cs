@@ -40,15 +40,15 @@ public class FromtCheck : MonoBehaviour {
 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag != "Floor")
-        {
-            Destroy(Target);
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag != "Floor")
+    //    {
+    //        Destroy(Target);
 
-            Instantiate(Target, targetPosition, Quaternion.identity);
-        }
-    }
+    //        Instantiate(Target, targetPosition, Quaternion.identity);
+    //    }
+    //}
 
     public Vector3 GetRandomPositionOnLevel()
     {
