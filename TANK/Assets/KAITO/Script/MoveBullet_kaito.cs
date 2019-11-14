@@ -58,7 +58,6 @@ public class MoveBullet_kaito : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Wall":    //壁
-                //Debug.Log("hitWall");
                 //反射の回数が上限を超えていない場合反射させる
                 if (currentNumberOfReflection < myStatus.MAX_NUMBER_OF_REFLECTION)
                 {
@@ -75,12 +74,10 @@ public class MoveBullet_kaito : MonoBehaviour
                 break;
 
             case "Player":      //プレイヤー
-                //Debug.Log("hitPlayer");
                 Destroy(this.gameObject);            //自分のオブジェクトを消す
                 break;
 
             case "Enemy":       //敵
-                //Debug.Log("hitEnemy");
                 Destroy(collision.gameObject);
                 Destroy(this.gameObject);            //自分のオブジェクトを消す
                 break;

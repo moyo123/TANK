@@ -11,8 +11,13 @@ public class ShotBullet_kaito : MonoBehaviour
     private GameObject bulletPrefab;        //弾のプレハブ
     private float shotIntervalCount;        //弾を発射する間隔をカウントする変数
     private int layerMask;                   //レイヤーマスク用の変数
+    private float instanceBulletDistance=3;       //弾を生成する時、戦車からどのぐらい離すかの距離
 
-   private RectTransform reticle;                  //レティクルの画像
+    private RectTransform reticle;                  //レティクルの画像
+
+    private GameObject Turret;              //砲塔のオブジェクトを取得する用の変数
+
+
 
     // Use this for initialization
     void Start()
@@ -27,11 +32,28 @@ public class ShotBullet_kaito : MonoBehaviour
         layerMask = 1 << groundLayer;                                       //レイヤーマスクの設定
 
         //レティクルの画像のtransformを取得
-        var g = GameObject.Find("Reticle");        
+        var g = GameObject.Find("Reticle");
         if (g)
         {
             reticle = g.GetComponent<RectTransform>();
         }
+        else
+        {
+            Debug.Log("レティクルの画像が用意されていないか、名前が違う");
+        }
+
+
+        //自分の子どもから砲塔のオブジェクトを取得
+        var t = transform.Find("Turret");
+        if (t)
+        {
+            Turret = t.gameObject; 
+        }
+        else
+        {
+            Debug.Log("砲塔が用意されていないか、名前が違う");
+        }
+
     }
 
 
@@ -41,15 +63,16 @@ public class ShotBullet_kaito : MonoBehaviour
     {
         DisplayReticle();       //レティクルを表示
 
-        ClickToShot();          //クリックした座標に向かって弾を撃つ
+        ChangeDirectionOfTurret();      //砲塔の向きを変える
 
+        ClickToShot();          //クリックした座標に向かって弾を撃つ
 
 
 
     }
 
     //レティクルを表示させる
-   private void DisplayReticle()
+    private void DisplayReticle()
     {
         if (reticle)
         {
@@ -86,10 +109,11 @@ public class ShotBullet_kaito : MonoBehaviour
                         if (Physics.Raycast(ray, out hit, 100, layerMask))
                         {
                             Vector3 clickDirection = hit.point - transform.position;                            //クリックした方向のベクトルを取得
-                            Vector3 shotDirection = new Vector3(clickDirection.x, 0, clickDirection.z);         //Yの座標を0にする
+                            clickDirection = new Vector3(clickDirection.x, 0, clickDirection.z);         //Yの座標を0にする
+
                             GameObject instanceBullet = Instantiate(bulletPrefab);                              //プレハブから弾を生成
-                            instanceBullet.transform.position = transform.position + shotDirection.normalized * 3f;     //弾の座標を設定、戦車からちょっと離して場所に生成する
-                            instanceBullet.GetComponent<MoveBullet_kaito>().Initialize(shotDirection,this.gameObject.tag);                //弾にベクトルを設定する
+                            instanceBullet.transform.position = transform.position + clickDirection .normalized * instanceBulletDistance;     //弾の座標を設定、戦車からちょっと離した場所に生成する
+                            instanceBullet.GetComponent<MoveBullet_kaito>().Initialize(clickDirection , this.gameObject.tag);                //弾にベクトルと自分のタグを設定する
 
                             CurrentBullet[i] = instanceBullet;                                                  //生成した弾を配列に格納する
 
@@ -102,10 +126,32 @@ public class ShotBullet_kaito : MonoBehaviour
         }
         else
         {
-            shotIntervalCount += Time.deltaTime;            //カウントする
+            shotIntervalCount += Time.deltaTime;            //時間をカウントする
         }
 
     }
+
+
+    //砲塔の方向を変える　テスト用
+    private void ChangeDirectionOfTurret()
+    {
+        if (Turret)
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    //レイを生成する、同じようなこと2回してることになるから本当は関数にしてまとめた方がいいはず
+
+            //レイが地面に当たった時、その場所の方向に向かって砲塔を向ける
+            if (Physics.Raycast(ray, out hit, 100, layerMask))
+            {
+                Vector3 mousePoint = hit.point - Turret.transform.position;       //自分の座標から、レイが当たった場所に向かってのベクトルを取得
+                mousePoint = new Vector3(mousePoint.x, 0, mousePoint.z);         //Y座標だけ0にする
+
+                Turret.transform.LookAt(Turret.transform.position + mousePoint);    //求めた方向に砲塔を向かせる
+
+            }
+        }
+    }
+
 
 
 }

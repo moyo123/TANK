@@ -14,11 +14,11 @@ public class PlayerController_kaito : MonoBehaviour
     {
         myStatus = Resources.Load<StatusData>("PlayerStatus");     //リソースファイル取得
 
+
         //リジッドボディの設定
         myRigidbody = GetComponent<Rigidbody>();                            //rigidbody取得
         myRigidbody.useGravity = false;                                     //重力をオフに
-        //myRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
-        myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;      //外部からの衝突で勝手に回転しないようにする
+        myRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation; 　//外部からの衝突で勝手に回転しないようにする
 
     }
 
@@ -34,8 +34,8 @@ public class PlayerController_kaito : MonoBehaviour
     //Update()に動く処理を書くと壁にぶつかった時に何故かガタガタするからこっちに書く
     private void FixedUpdate()
     {
-        PlayerMove();   //プレイヤーの回転と移動の処理
 
+        PlayerMove();   //プレイヤーの回転と移動の処理
 
 
     }
