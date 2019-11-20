@@ -16,11 +16,15 @@ public class FromtCheck : MonoBehaviour {
 
     private float changeTargetSqrDistance = 10f;
 
+    Rigidbody rigidbody;
+
     [SerializeField]
     public GameObject Target;
 
     private void Start()
     {
+        rigidbody = GetComponent<Rigidbody>();
+
         targetPosition = GetRandomPositionOnLevel();
         Instantiate(Target, targetPosition, Quaternion.identity);
         InstanceFlg = true;
@@ -28,6 +32,8 @@ public class FromtCheck : MonoBehaviour {
 
     private void Update()
     {
+        rigidbody.velocity = Vector3.zero;
+
         float sqrDistanceToTarget = Vector3.SqrMagnitude(transform.position - targetPosition);
         if (sqrDistanceToTarget < changeTargetSqrDistance)
         {
