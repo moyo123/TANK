@@ -1,51 +1,21 @@
 fileFormatVersion: 2
-guid: d047de01cb8b4e2468d894a29b36c975
-timeCreated: 1573627269
+guid: be122b1be66d8694b94edb0c342c6981
+timeCreated: 1573623830
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Cube.001
-    100002: Cylinder.001
-    100004: Cylinder.021
-    100006: Cylinder.022
-    100008: //RootNode
-    400000: Cube.001
-    400002: Cylinder.001
-    400004: Cylinder.021
-    400006: Cylinder.022
-    400008: //RootNode
-    2300000: Cube.001
-    2300002: Cylinder.001
-    2300004: Cylinder.021
-    2300006: Cylinder.022
-    2300008: //RootNode
-    3300000: Cube.001
-    3300002: Cylinder.001
-    3300004: Cylinder.021
-    3300006: Cylinder.022
-    3300008: //RootNode
-    4300000: Cube.002
-    4300002: Cylinder.022
-    4300004: Cylinder.001
-    4300006: Cube.001
-    4300008: Cylinder.021
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cylinder
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: HTbodyTex
-    second: {fileID: 2100000, guid: 60ea976a9ad995240ba0bbd6fa82a65a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: HTtex
-    second: {fileID: 2100000, guid: 9ebb495869ad9ec44a2daaf11c3cefde, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material
-    second: {fileID: 2100000, guid: a2f3d715f10f35c4fab3a03332d2f24f, type: 2}
+      name: light
+    second: {fileID: 2100000, guid: e4f558d75651c434a8f01d389f229c2e, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
