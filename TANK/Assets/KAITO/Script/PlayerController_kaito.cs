@@ -5,20 +5,20 @@ using UnityEngine;
 public class PlayerController_kaito : MonoBehaviour
 {
 
-    private StatusData myStatus;        //リソースファイル取得用の変数
-    private Rigidbody myRigidbody;      //自分のリジッドボディ取得用の変数
+    private StatusData myStatus;           //リソースファイル取得用の変数
+    private Rigidbody myRigidbody;         //自分のリジッドボディ取得用の変数
 
 
     // Use this for initialization
     void Start()
     {
-        myStatus = Resources.Load<StatusData>("PlayerStatus");     //リソースファイル取得
+        myStatus = Resources.Load<StatusData>("PlayerStatus");              //リソースファイル取得
+
 
         //リジッドボディの設定
         myRigidbody = GetComponent<Rigidbody>();                            //rigidbody取得
         myRigidbody.useGravity = false;                                     //重力をオフに
-        //myRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
-        myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;      //外部からの衝突で勝手に回転しないようにする
+        myRigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation; 　//外部からの衝突で勝手に回転しないようにする
 
     }
 
@@ -34,8 +34,8 @@ public class PlayerController_kaito : MonoBehaviour
     //Update()に動く処理を書くと壁にぶつかった時に何故かガタガタするからこっちに書く
     private void FixedUpdate()
     {
-        PlayerMove();   //プレイヤーの回転と移動の処理
 
+        PlayerMove();         //プレイヤーの回転と移動の処理
 
 
     }
@@ -43,9 +43,9 @@ public class PlayerController_kaito : MonoBehaviour
     //プレイヤーの回転と移動
     private void PlayerMove()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");  //左右の入力
-        float vertical = Input.GetAxisRaw("Vertical");      //上下の入力
-        Vector3 toDirection = (new Vector3(horizontal, 0, vertical)).normalized;    //入力した方向を格納
+        float horizontal = Input.GetAxisRaw("Horizontal");                            //左右の入力
+        float vertical = Input.GetAxisRaw("Vertical");                                //上下の入力
+        Vector3 toDirection = (new Vector3(horizontal, 0, vertical)).normalized;      //入力した方向を格納
 
         //キーが入力されたら
         if (toDirection != Vector3.zero)
