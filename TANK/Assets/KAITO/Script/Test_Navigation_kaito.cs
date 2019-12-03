@@ -168,7 +168,6 @@ public class Test_Navigation_kaito : MonoBehaviour
                 //行き先に指定した値まで近づいたら停止させる
                 float Distance = (destinationPosition - transform.position).magnitude;
                 //Debug.Log("distance " + Distance);
-                //Debug.Log("stoppingdistance " + myNavMeshAgent.stoppingDistance);
                 if (Distance <= stoppingDistance+2)                      //****************  何故か、stoppingDistanceの距離よりも近くなったら止まるって書いても、近くないのに止まる時があるから+2だけ伸ばしてる。原因が分かったなら修正してほしい
                 {
                     isMove = false;                                      //フラグを動いていない状態に戻す
