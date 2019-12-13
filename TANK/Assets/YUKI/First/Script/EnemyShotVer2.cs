@@ -21,27 +21,25 @@ public class EnemyShotVer2 : MonoBehaviour {
     void Start () {
         Debug.Log(transform.eulerAngles.y + lookRotation);
         lookRotation = transform.eulerAngles.y + lookRotation;
-        turret = transform.GetChild(0).gameObject.GetComponent<GameObject>();
+        turret = transform.GetChild(0).gameObject;
     }
 	
 	// Update is called once per frame
 	void Update () {
         // 砲台をプレイヤーの方向に向ける
-        //Quaternion targetRotation = Quaternion.LookRotation(new Vector3(this.transform.localEulerAngles.x + 1.0f, 0, 0));
-        //turret.rotation = Quaternion.Slerp(turret.rotation, targetRotation, Time.deltaTime * turretRotationSmooth);
+        Debug.Log(Mathf.Ceil(turret.transform.eulerAngles.y) + Mathf.Ceil(transform.eulerAngles.y) + "::" + (Mathf.Ceil(transform.eulerAngles.y)+360f) + Mathf.Ceil(lookRotation));
+
 
         if (Mathf.Ceil(turret.transform.eulerAngles.y) + Mathf.Ceil(transform.eulerAngles.y) != Mathf.Ceil(transform.eulerAngles.y) + Mathf.Ceil(lookRotation))
         {
             turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, Quaternion.Euler(new Vector3(0, transform.eulerAngles.y + lookRotation, 0)), rotateSpeed * Time.deltaTime);
-            Debug.Log("iffffffffffffffffff");
         }
-        else//if(turret.transform.eulerAngles.y + transform.eulerAngles.y == transform.eulerAngles.y + lookRotation)
+        else if(Mathf.Ceil(turret.transform.eulerAngles.y) + Mathf.Ceil(transform.eulerAngles.y) == Mathf.Ceil(transform.eulerAngles.y) + Mathf.Ceil(lookRotation)
+                || Mathf.Ceil(turret.transform.eulerAngles.y) + Mathf.Ceil(transform.eulerAngles.y) == (Mathf.Ceil(transform.eulerAngles.y) + 360f) + Mathf.Ceil(lookRotation))
         {
-            //lookRotation *= -1;
-            Debug.Log("elseだよー");
+            lookRotation *= -1f;
         }
 
-        Debug.Log("aa");
         ray = new Ray(turret.transform.position , muzzle.transform.position - turret.transform.position);
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.green, 0);
     }
