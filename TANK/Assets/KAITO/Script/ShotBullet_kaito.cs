@@ -54,6 +54,7 @@ public class ShotBullet_kaito : MonoBehaviour
             Debug.Log("砲塔が用意されていないか、名前が違う");
         }
 
+
     }
 
 
@@ -128,7 +129,7 @@ public class ShotBullet_kaito : MonoBehaviour
         {
             shotIntervalCount += Time.deltaTime;            //時間をカウントする
         }
-
+        　
     }
 
 
@@ -154,6 +155,27 @@ public class ShotBullet_kaito : MonoBehaviour
         }
     }
 
+    Transform GetTurretFromChild(Transform _transform)
+    {
+        //if (_transform.childCount > 0)
+        //{
 
+        //    foreach (Transform child in _transform)
+        //    {
+        //        if (child.gameObject.tag == "Turret")
+        //        {
+        //            return child;
+        //        }
+        //        else
+        //        {
+        //            Transform c = GetTurretFromChild(child);
+        //        }
+
+        //    }
+        //}
+
+
+        return null;
+    }
 
 }

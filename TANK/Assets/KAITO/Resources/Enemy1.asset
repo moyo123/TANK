@@ -8,12 +8,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3e2360b1f3b6b941bf4227b0674799a, type: 3}
-  m_Name: PlayerStatus
+  m_Script: {fileID: 11500000, guid: 41d1fe276fdedde4cb8ccc6f54349356, type: 3}
+  m_Name: Enemy1
   m_EditorClassIdentifier: 
   MoveSpeed: 5
-  RotateSpeed: 400
+  RotateSpeed: 200
   BulletMoveSpeed: 10
-  MaxNumberOfShots: 5
-  MaxNumberOfReflection: 2
-  ShotIntervalTime: 0.2
+  MaxNumberOfShots: 3
+  MaxNumberOfReflection: 1
+  ShotIntervalTime: 2
+  ComboNum: 0
+  ComboIntervalTime: 0

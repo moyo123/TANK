@@ -84,12 +84,13 @@ public class MoveBullet_kaito : MonoBehaviour
                 break;
 
             case "Player":      //プレイヤー
+                Destroy(collision.gameObject);          //衝突したオブジェクトを消す
                 Destroy(this.gameObject);            //自分のオブジェクトを消す
                 break;
 
             case "Enemy":       //敵
-                //Destroy(collision.gameObject);
-                //Destroy(this.gameObject);            //自分のオブジェクトを消す
+                Destroy(collision.gameObject);
+                Destroy(this.gameObject);            //自分のオブジェクトを消す
                 break;
 
 
