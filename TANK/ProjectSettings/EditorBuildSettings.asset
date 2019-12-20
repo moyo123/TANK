@@ -4,4 +4,19 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/KAITO/Scene/TestScene_kaito.unity
+    guid: cc3b472a6c95b8e429c6f2bd9b04712e
+  - enabled: 1
+    path: Assets/KAITO/Scene/Stage2_kaito.unity
+    guid: e7bb52956cc140248ba715d9b795b85a
+  - enabled: 0
+    path: Assets/KAITO/Scene/Stage3_kaito.unity
+    guid: 096976f9e94b3b6498e731c742a79e0e
+  - enabled: 0
+    path: Assets/KAITO/Scene/Stage4_kaito.unity
+    guid: 0d9c3ff630b760b4aa2baaf9203c6227
+  - enabled: 0
+    path: Assets/KAITO/Scene/Stage5_kaito.unity
+    guid: 45c06baa8fbfc0a4380ee36aa345e7e1
