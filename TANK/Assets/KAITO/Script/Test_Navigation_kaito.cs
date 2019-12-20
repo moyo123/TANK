@@ -10,7 +10,7 @@ public class Test_Navigation_kaito : MonoBehaviour
     private GameObject target;                  //  プレイヤー
 
 
-    private StatusData myStatusData;            //StatusData取得用
+   [SerializeField] private StatusData myStatusData;            //StatusData取得用
     private GameObject bulletPrefab;            //弾のプレハブ取得用
     private NavMeshAgent myNavMeshAgent;        //NavMeshAgent取得用
     private Rigidbody myRigidbody;              //Rigidbody取得用
@@ -37,8 +37,13 @@ public class Test_Navigation_kaito : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-        myStatusData = Resources.Load<StatusData>("TestEnemy1_kaito");          //自分のStatusDataを取得
+        //StatusDataをアタッチしていなかった場合、Enemy1のStatusをつける
+        //if (!myStatusData)
+        //{
+        //Debug.Log(myStatusData);
+            myStatusData = Resources.Load<StatusData>("TestEnemy1_kaito");          //自分のStatusDataを取得
+        //}
+        
         bulletPrefab = (GameObject)Resources.Load("Prefab/BulletPrefab");       //弾のプレハブを取得
 
         target = GameObject.FindGameObjectWithTag("Player");                    //プレイヤーを取得
@@ -168,7 +173,6 @@ public class Test_Navigation_kaito : MonoBehaviour
                 //行き先に指定した値まで近づいたら停止させる
                 float Distance = (destinationPosition - transform.position).magnitude;
                 //Debug.Log("distance " + Distance);
-                //Debug.Log("stoppingdistance " + myNavMeshAgent.stoppingDistance);
                 if (Distance <= stoppingDistance+2)                      //****************  何故か、stoppingDistanceの距離よりも近くなったら止まるって書いても、近くないのに止まる時があるから+2だけ伸ばしてる。原因が分かったなら修正してほしい
                 {
                     isMove = false;                                      //フラグを動いていない状態に戻す
