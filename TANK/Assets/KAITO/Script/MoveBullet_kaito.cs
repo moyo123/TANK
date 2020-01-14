@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEditor;
+//using UnityEditor;
 
 public class MoveBullet_kaito : MonoBehaviour
 {

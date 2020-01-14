@@ -35,6 +35,7 @@ public class ShotBullet_kaito : MonoBehaviour
         var g = GameObject.Find("Reticle");
         if (g)
         {
+            Debug.Log("みつけたよ");
             reticle = g.GetComponent<RectTransform>();
         }
         else

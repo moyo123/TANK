@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: PlayerStatus
   m_EditorClassIdentifier: 
   MoveSpeed: 5
-  RotateSpeed: 200
+  RotateSpeed: 400
   BulletMoveSpeed: 10
   MaxNumberOfShots: 5
   MaxNumberOfReflection: 2

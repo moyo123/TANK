@@ -23,23 +23,36 @@ public class SearchEnemy : MonoBehaviour {
 
         if (!GameObject.FindWithTag("Player"))　//プレイヤーがいないとき（失敗時）
         {
-            GameEnd.text = GameEndString[1];
-            Invoke("FailedMoveScene", 2);
+            if (GameEndString[1] == "バグ有、次ステージ移動")
+            {
+                GameEnd.text = GameEndString[1];
+                Invoke("MoveScene", 2);
+            }
+            else
+            {
+                GameEnd.text = GameEndString[1];
+                Invoke("FailedMoveScene", 2);
+            }
         }
         if(tagObjects.Length == 0 && GameObject.FindWithTag("Player"))　//プレイヤーがいる且つ敵が全滅時（クリア）
         {
-            GameEnd.text = GameEndString[0];
-            Invoke("MoveScene", 2);
+            if (GameEndString[0] == "All CLEAR")
+            {
+                GameEnd.text = GameEndString[0];
+                Invoke("MoveScene", 3.5f);
+            }
+            else
+            {
+                GameEnd.text = GameEndString[0];
+                Invoke("MoveScene", 2);
+            }
         }
     }
 
     void MoveScene()　//次ステージ行き
     {
-        if (GameObject.FindWithTag("Player"))
-        {
             Debug.Log(SceneName);
             SceneManager.LoadScene(SceneName);
-        }
     }
     void FailedMoveScene()　//タイトル行き
     {
