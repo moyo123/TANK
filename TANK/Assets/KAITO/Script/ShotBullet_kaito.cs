@@ -45,9 +45,10 @@ public class ShotBullet_kaito : MonoBehaviour
 
 
         //自分の子どもから砲塔のオブジェクトを取得
-        var t = transform.Find("Turret");
+         var t = transform.Find("Turret");
         if (t)
         {
+            Debug.Log("Turretあったよ");
             Turret = t.gameObject; 
         }
         else
