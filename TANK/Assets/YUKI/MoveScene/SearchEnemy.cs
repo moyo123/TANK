@@ -51,7 +51,7 @@ public class SearchEnemy : MonoBehaviour {
 
     void MoveScene()　//次ステージ行き
     {
-            Debug.Log(SceneName);
+            //Debug.Log(SceneName);
             SceneManager.LoadScene(SceneName);
     }
     void FailedMoveScene()　//タイトル行き

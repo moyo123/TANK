@@ -10,14 +10,13 @@ public class ShotBullet_kaito : MonoBehaviour
     private GameObject[] CurrentBullet;               //発射されている弾を格納するための配列
     private GameObject bulletPrefab;                  //弾のプレハブ
     private float shotIntervalCount;                  //弾を発射する間隔をカウントする変数
+    public int ammoCount;                            //残弾数をカウントする変数
     private int layerMask;                            //レイヤーマスク用の変数
     private float instanceBulletDistance=3;           //弾を生成する時、戦車からどのぐらい離すかの距離
 
     private RectTransform reticle;                    //レティクルの画像
 
     private GameObject Turret;                        //砲塔のオブジェクトを取得する用の変数
-
-
 
     // Use this for initialization
     void Start()
@@ -70,9 +69,26 @@ public class ShotBullet_kaito : MonoBehaviour
 
         ClickToShot();                     //クリックした座標に向かって弾を撃つ
 
-
-
+        CountAmmo();
     }
+
+    private void CountAmmo()
+    {
+        ammoCount = 0;
+        for (int i = 0; i < myStatus.MAX_NUMBER_OF_SHOTS; i++)
+        {
+            if (CurrentBullet[i] == null)
+            {
+                ammoCount++;
+            }
+        }
+    }
+
+    //private void DisplayAmmo()
+    //{
+    //    Instantiate(Ammo);
+    //    Ammo.transform.SetParent(canvas.transform, false);
+    //}
 
     //レティクルを表示させる
     private void DisplayReticle()
@@ -100,6 +116,7 @@ public class ShotBullet_kaito : MonoBehaviour
             //マウス左クリックした時
             if (Input.GetMouseButtonDown(0))
             {
+                //Debug.Log(ammoCount);
                 for (int i = 0; i < myStatus.MAX_NUMBER_OF_SHOTS; i++)
                 {
                     //配列の中にnullがあったらそこに弾を格納する、なかったら弾を生成しない

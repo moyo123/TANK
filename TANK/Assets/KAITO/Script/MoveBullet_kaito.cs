@@ -61,6 +61,11 @@ public class MoveBullet_kaito : MonoBehaviour
         parentTag = _parentTag;             //親のタグ名を格納
     }
 
+    private void THISDES()
+    {
+        Destroy(this.gameObject);       //自分のオブジェクトを消す
+    }
+
 
     //何かに当たった時の処理
     private void OnCollisionEnter(Collision collision)
@@ -75,6 +80,10 @@ public class MoveBullet_kaito : MonoBehaviour
                     transform.LookAt(transform.position + Direction);                       //進む方向に向かせる
                     transform.Rotate(90, 0, 0);//***********************************
                     currentNumberOfReflection++;                                            //反射の回数を１つ増やす
+                    Debug.Log(currentNumberOfReflection + "回反射したよ");
+                    Debug.Log(System.DateTime.Now.Hour.ToString() + "H:" +
+                            System.DateTime.Now.Minute.ToString() + "M:" +
+                              System.DateTime.Now.Second.ToString() + "S");
                 }
                 else
                 {
@@ -95,7 +104,23 @@ public class MoveBullet_kaito : MonoBehaviour
 
 
             case "Bullet":      //弾
-                Destroy(this.gameObject);           //自分のオブジェクトを消す
+                                // Destroy(this.gameObject);           //自分のオブジェクトを消す
+
+                //反射の回数が上限を超えていない場合反射させる
+                if (currentNumberOfReflection < maxReflection)
+                {
+                    Direction = Vector3.Reflect(Direction, collision.contacts[0].normal);   //反射した時のベクトルを求める
+                    transform.LookAt(transform.position + Direction);                       //進む方向に向かせる
+                    transform.Rotate(90, 0, 0);//***********************************
+                    currentNumberOfReflection++;                                            //反射の回数を１つ増やす
+
+                    Invoke("THISDES", 3f);
+                }
+                else 
+                {
+                    Destroy(this.gameObject);       //自分のオブジェクトを消す
+                }
+
 
 
                 break;
