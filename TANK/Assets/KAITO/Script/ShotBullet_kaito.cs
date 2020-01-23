@@ -17,11 +17,11 @@ public class ShotBullet_kaito : MonoBehaviour
     private RectTransform reticle;                    //レティクルの画像
 
     private GameObject Turret;                        //砲塔のオブジェクトを取得する用の変数
-
+    AudioManager audioManager;
     // Use this for initialization
     void Start()
     {
-
+        audioManager = AudioManager.Instance;
         myStatus = Resources.Load<StatusData>("PlayerStatus");                //リソースファイル取得
         CurrentBullet = new GameObject[myStatus.MAX_NUMBER_OF_SHOTS];         //配列のメモリ確保
         shotIntervalCount = myStatus.SHOT_INTERVAL_TIME;                      //時間カウントするやつ
@@ -138,6 +138,8 @@ public class ShotBullet_kaito : MonoBehaviour
                             CurrentBullet[i] = instanceBullet;                                                    //生成した弾を配列に格納する
 
                             shotIntervalCount = 0;                                                                //カウントを0に戻す
+
+                            AudioManager.Instance.PlaySE("short_bomb", 0);
                             break;
                         }
                     }

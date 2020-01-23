@@ -441,6 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623306ab912cf954da2d4246e0de3312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sound1: {fileID: 0}
 --- !u!114 &114931620216655666
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -452,3 +453,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426410646e3e57343baf061119d0cffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammoCount: 0

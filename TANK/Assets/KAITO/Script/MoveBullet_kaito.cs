@@ -13,7 +13,7 @@ public class MoveBullet_kaito : MonoBehaviour
     private string parentTag;                 //自分を撃った親のタグ名
     private int maxReflection;                //反射する回数
     private float moveSpeed;                  //進むスピード
-
+    private AudioSource BulletSound;          //SE
 
     // Use this for initialization
     void Start()
@@ -37,6 +37,7 @@ public class MoveBullet_kaito : MonoBehaviour
         transform.LookAt(transform.position + Direction);        //進む方向に向かせる
         transform.Rotate(90, 0, 0);//***********************************    
         currentNumberOfReflection = 0;                           //反射した回数のやつ
+        BulletSound = GetComponent<AudioSource>();
 
     }
 
@@ -79,6 +80,7 @@ public class MoveBullet_kaito : MonoBehaviour
                     Direction = Vector3.Reflect(Direction, collision.contacts[0].normal);   //反射した時のベクトルを求める
                     transform.LookAt(transform.position + Direction);                       //進む方向に向かせる
                     transform.Rotate(90, 0, 0);//***********************************
+                    BulletSound.PlayOneShot(BulletSound.clip);
                     currentNumberOfReflection++;                                            //反射の回数を１つ増やす
                     Debug.Log(currentNumberOfReflection + "回反射したよ");
                     Debug.Log(System.DateTime.Now.Hour.ToString() + "H:" +
@@ -93,11 +95,13 @@ public class MoveBullet_kaito : MonoBehaviour
                 break;
 
             case "Player":      //プレイヤー
+                AudioManager.Instance.PlaySE("爆破・破砕音02");
                 Destroy(collision.gameObject);          //衝突したオブジェクトを消す
                 Destroy(this.gameObject);            //自分のオブジェクトを消す
                 break;
 
             case "Enemy":       //敵
+                AudioManager.Instance.PlaySE("爆破・破砕音02");
                 Destroy(collision.gameObject);
                 Destroy(this.gameObject);            //自分のオブジェクトを消す
                 break;
@@ -112,6 +116,7 @@ public class MoveBullet_kaito : MonoBehaviour
                     Direction = Vector3.Reflect(Direction, collision.contacts[0].normal);   //反射した時のベクトルを求める
                     transform.LookAt(transform.position + Direction);                       //進む方向に向かせる
                     transform.Rotate(90, 0, 0);//***********************************
+                    BulletSound.PlayOneShot(BulletSound.clip);
                     currentNumberOfReflection++;                                            //反射の回数を１つ増やす
 
                     Invoke("THISDES", 3f);
