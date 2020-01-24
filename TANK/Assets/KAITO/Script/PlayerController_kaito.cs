@@ -8,12 +8,14 @@ public class PlayerController_kaito : MonoBehaviour
     private StatusData myStatus;           //リソースファイル取得用の変数
     private Rigidbody myRigidbody;         //自分のリジッドボディ取得用の変数
 
+    private AudioSource sound01;           //SE
 
     // Use this for initialization
     void Start()
     {
         myStatus = Resources.Load<StatusData>("PlayerStatus");              //リソースファイル取得
 
+        sound01 = GetComponent<AudioSource>();
 
         //リジッドボディの設定
         myRigidbody = GetComponent<Rigidbody>();                            //rigidbody取得
@@ -50,6 +52,9 @@ public class PlayerController_kaito : MonoBehaviour
         //キーが入力されたら
         if (toDirection != Vector3.zero)
         {
+            //SE再生
+            sound01.PlayOneShot(sound01.clip);
+
             //プレイヤーの向いてる方向とキーの入力した方向が同じだった場合
             if (transform.forward == toDirection)
             {
@@ -62,6 +67,10 @@ public class PlayerController_kaito : MonoBehaviour
                 //回転させる
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toDirection), Time.deltaTime * myStatus.ROTATE_SPEED);
             }
+        }
+        else
+        {
+            sound01.Stop();
         }
 
         myRigidbody.velocity = Vector3.zero;    //ぶつかった後に勝手に飛んでいかないように加速度を常に0にしておく      あんま良い方法が思いつかなかった、なんかあったら書き換えてほしい

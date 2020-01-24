@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEditor;
+//using UnityEditor;
 
 public class MoveBullet_kaito : MonoBehaviour
 {
@@ -13,7 +13,7 @@ public class MoveBullet_kaito : MonoBehaviour
     private string parentTag;                 //自分を撃った親のタグ名
     private int maxReflection;                //反射する回数
     private float moveSpeed;                  //進むスピード
-
+    private AudioSource BulletSound;          //SE
 
     // Use this for initialization
     void Start()
@@ -37,6 +37,7 @@ public class MoveBullet_kaito : MonoBehaviour
         transform.LookAt(transform.position + Direction);        //進む方向に向かせる
         transform.Rotate(90, 0, 0);//***********************************    
         currentNumberOfReflection = 0;                           //反射した回数のやつ
+        BulletSound = GetComponent<AudioSource>();
 
     }
 
@@ -61,6 +62,11 @@ public class MoveBullet_kaito : MonoBehaviour
         parentTag = _parentTag;             //親のタグ名を格納
     }
 
+    private void THISDES()
+    {
+        Destroy(this.gameObject);       //自分のオブジェクトを消す
+    }
+
 
     //何かに当たった時の処理
     private void OnCollisionEnter(Collision collision)
@@ -74,7 +80,12 @@ public class MoveBullet_kaito : MonoBehaviour
                     Direction = Vector3.Reflect(Direction, collision.contacts[0].normal);   //反射した時のベクトルを求める
                     transform.LookAt(transform.position + Direction);                       //進む方向に向かせる
                     transform.Rotate(90, 0, 0);//***********************************
+                    BulletSound.PlayOneShot(BulletSound.clip);
                     currentNumberOfReflection++;                                            //反射の回数を１つ増やす
+                    Debug.Log(currentNumberOfReflection + "回反射したよ");
+                    Debug.Log(System.DateTime.Now.Hour.ToString() + "H:" +
+                            System.DateTime.Now.Minute.ToString() + "M:" +
+                              System.DateTime.Now.Second.ToString() + "S");
                 }
                 else
                 {
@@ -84,18 +95,37 @@ public class MoveBullet_kaito : MonoBehaviour
                 break;
 
             case "Player":      //プレイヤー
+                AudioManager.Instance.PlaySE("爆破・破砕音02");
                 Destroy(collision.gameObject);          //衝突したオブジェクトを消す
                 Destroy(this.gameObject);            //自分のオブジェクトを消す
                 break;
 
             case "Enemy":       //敵
+                AudioManager.Instance.PlaySE("爆破・破砕音02");
                 Destroy(collision.gameObject);
                 Destroy(this.gameObject);            //自分のオブジェクトを消す
                 break;
 
 
             case "Bullet":      //弾
-                Destroy(this.gameObject);           //自分のオブジェクトを消す
+                                // Destroy(this.gameObject);           //自分のオブジェクトを消す
+
+                //反射の回数が上限を超えていない場合反射させる
+                if (currentNumberOfReflection < maxReflection)
+                {
+                    Direction = Vector3.Reflect(Direction, collision.contacts[0].normal);   //反射した時のベクトルを求める
+                    transform.LookAt(transform.position + Direction);                       //進む方向に向かせる
+                    transform.Rotate(90, 0, 0);//***********************************
+                    BulletSound.PlayOneShot(BulletSound.clip);
+                    currentNumberOfReflection++;                                            //反射の回数を１つ増やす
+
+                    Invoke("THISDES", 3f);
+                }
+                else 
+                {
+                    Destroy(this.gameObject);       //自分のオブジェクトを消す
+                }
+
 
 
                 break;
