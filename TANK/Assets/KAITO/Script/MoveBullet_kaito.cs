@@ -96,12 +96,14 @@ public class MoveBullet_kaito : MonoBehaviour
 
             case "Player":      //プレイヤー
                 AudioManager.Instance.PlaySE("爆破・破砕音02");
+                GetComponent<ExplosionEffect>().Effect(collision.transform);
                 Destroy(collision.gameObject);          //衝突したオブジェクトを消す
                 Destroy(this.gameObject);            //自分のオブジェクトを消す
                 break;
 
             case "Enemy":       //敵
                 AudioManager.Instance.PlaySE("爆破・破砕音02");
+                GetComponent<ExplosionEffect>().Effect(collision.transform);
                 Destroy(collision.gameObject);
                 Destroy(this.gameObject);            //自分のオブジェクトを消す
                 break;
