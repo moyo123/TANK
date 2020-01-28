@@ -71,6 +71,7 @@ public class MoveBullet_kaito : MonoBehaviour
     //何かに当たった時の処理
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("name " + collision.gameObject.name);
         switch (collision.gameObject.tag)
         {
             case "Wall":    //壁
@@ -95,12 +96,19 @@ public class MoveBullet_kaito : MonoBehaviour
                 break;
 
             case "Player":      //プレイヤー
-                if (currentNumberOfReflection == 0)
+                if (parentTag == "Player"&& currentNumberOfReflection == 0)
                 {
+
+                }
+                else
+                {
+                    Debug.Log("hit Player");
                     AudioManager.Instance.PlaySE("爆破・破砕音02");
                     GetComponent<ExplosionEffect>().Effect(collision.transform);
-                    Destroy(collision.gameObject);          //衝突したオブジェクトを消す
-                    Destroy(this.gameObject);            //自分のオブジェクトを消す
+
+                    Destroy(collision.gameObject);
+                    Destroy(this.gameObject);
+                    
                 }
                 break;
 

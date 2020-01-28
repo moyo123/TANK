@@ -10,6 +10,7 @@ TagManager:
   - Floor
   - Target
   - Ground
+  - Range
   layers:
   - Default
   - TransparentFX

@@ -12,7 +12,7 @@ public class ShotBullet_kaito : MonoBehaviour
     private float shotIntervalCount;                  //弾を発射する間隔をカウントする変数
     public int ammoCount;                            //残弾数をカウントする変数
     private int layerMask;                            //レイヤーマスク用の変数
-    private float instanceBulletDistance=3;           //弾を生成する時、戦車からどのぐらい離すかの距離
+    private float instanceBulletDistance=2.5f;           //弾を生成する時、戦車からどのぐらい離すかの距離
 
     private RectTransform reticle;                    //レティクルの画像
 
