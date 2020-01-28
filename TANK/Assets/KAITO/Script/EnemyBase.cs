@@ -14,8 +14,10 @@ public class EnemyBase : MonoBehaviour
     private NavMeshAgent myNavMeshAgent;        //NavMeshAgent取得用
     private Rigidbody myRigidbody;              //Rigidbody取得用
 
-    private Vector3 maxRange;                 //ランダムで移動させる時の一番右上の座標を格納するための変数
-    private Vector3 minRange;                 //ランダムで移動させる時の一番左下の座標を格納するための変数
+    private static Vector3 maxRange;                 //ランダムで移動させる時の一番右上の座標を格納するための変数
+    private static Vector3 minRange;                 //ランダムで移動させる時の一番左下の座標を格納するための変数
+    private static bool getRangeFlag = false;       //ランダムで移動させる時の座標を取得したかのフラグ
+
     private float stoppingDistance = 5;       //目標地点のどのぐらい手前まで来たら止まるかのやつ
     private bool isMove = false;              //今が動いているかを判別するやつ
     private float moveIntervalTime = 3;       //次動くまでにどのぐらい止まっておくかの時間、単位は秒
@@ -54,7 +56,9 @@ public class EnemyBase : MonoBehaviour
         float x = Random.Range(minRange.x, maxRange.x);     //x座標をランダムで決める
         float z = Random.Range(minRange.z, maxRange.z);     //z座標をランダムで決める
         Vector3 randomPosition = new Vector3(x, 1, z);      //ランダムで決めた値を入れる
+        Debug.Log("randamposition " + randomPosition);
         return randomPosition;                              //ランダムで決めた値を返す
+
     }
 
 
@@ -191,17 +195,40 @@ public class EnemyBase : MonoBehaviour
 
 
         //４つの壁からxとzの最大と最小の座標を取得する
-        GameObject walls = GameObject.Find("Walls");
-        foreach (Transform child in walls.transform)
+        //GameObject walls = GameObject.Find("Walls");
+        if (getRangeFlag == false)
         {
-            if (child.position.x < 0)
-                minRange.x = child.position.x;
-            else if (child.position.x > 0)
-                maxRange.x = child.position.x;
-            else if (child.position.z < 0)
-                minRange.z = child.position.z;
-            else if (child.position.z > 0)
-                maxRange.z = child.position.z;
+            //GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
+            //foreach (GameObject wall in walls)
+            //{
+            //    if (wall.transform.position.x < minRange.x)
+            //        minRange.x = wall.transform.position.x-10;      //親の座標が10だけ多いから合わせてる
+            //    if (wall.transform.position.x > maxRange.x)
+            //        maxRange.x = wall.transform.position.x-10;      //親の座標が10だけ多いから合わせてる
+            //    if (wall.transform.position.z < minRange.z)
+            //        minRange.z = wall.transform.position.z;
+            //    if (wall.transform.position.z > maxRange.z)
+            //        maxRange.z = wall.transform.position.z;
+            //}
+            //Debug.Log("minrange " + minRange);
+            //Debug.Log("maxrange " + maxRange);
+            GameObject[] range = GameObject.FindGameObjectsWithTag("Range");
+            foreach(GameObject r in range)
+            {
+                if (r.transform.position.x < minRange.x)
+                    minRange.x = r.transform.position.x;
+                if (r.transform.position.x > maxRange.x)
+                    maxRange.x = r.transform.position.x;
+                if (r.transform.position.z < minRange.z)
+                    minRange.z = r.transform.position.z;
+                if (r.transform.position.z > maxRange.z)
+                    maxRange.z = r.transform.position.z;
+
+                Destroy(r);
+            }
+            
+
+            getRangeFlag = true;                                    //1回だけしか呼ばれないようにフラグを設定
         }
 
 

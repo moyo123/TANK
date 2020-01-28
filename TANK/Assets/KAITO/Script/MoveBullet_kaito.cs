@@ -95,10 +95,13 @@ public class MoveBullet_kaito : MonoBehaviour
                 break;
 
             case "Player":      //プレイヤー
-                AudioManager.Instance.PlaySE("爆破・破砕音02");
-                GetComponent<ExplosionEffect>().Effect(collision.transform);
-                Destroy(collision.gameObject);          //衝突したオブジェクトを消す
-                Destroy(this.gameObject);            //自分のオブジェクトを消す
+                if (currentNumberOfReflection == 0)
+                {
+                    AudioManager.Instance.PlaySE("爆破・破砕音02");
+                    GetComponent<ExplosionEffect>().Effect(collision.transform);
+                    Destroy(collision.gameObject);          //衝突したオブジェクトを消す
+                    Destroy(this.gameObject);            //自分のオブジェクトを消す
+                }
                 break;
 
             case "Enemy":       //敵
@@ -113,21 +116,22 @@ public class MoveBullet_kaito : MonoBehaviour
                                 // Destroy(this.gameObject);           //自分のオブジェクトを消す
 
                 //反射の回数が上限を超えていない場合反射させる
-                if (currentNumberOfReflection < maxReflection)
-                {
-                    Direction = Vector3.Reflect(Direction, collision.contacts[0].normal);   //反射した時のベクトルを求める
-                    transform.LookAt(transform.position + Direction);                       //進む方向に向かせる
-                    transform.Rotate(90, 0, 0);//***********************************
-                    BulletSound.PlayOneShot(BulletSound.clip);
-                    currentNumberOfReflection++;                                            //反射の回数を１つ増やす
+                //if (currentNumberOfReflection < maxReflection)
+                //{
+                //    Direction = Vector3.Reflect(Direction, collision.contacts[0].normal);   //反射した時のベクトルを求める
+                //    transform.LookAt(transform.position + Direction);                       //進む方向に向かせる
+                //    transform.Rotate(90, 0, 0);//***********************************
+                //    BulletSound.PlayOneShot(BulletSound.clip);
+                //    currentNumberOfReflection++;                                            //反射の回数を１つ増やす
 
-                    Invoke("THISDES", 3f);
-                }
-                else 
-                {
-                    Destroy(this.gameObject);       //自分のオブジェクトを消す
-                }
+                //    Invoke("THISDES", 3f);
+                //}
+                //else 
+                //{
+                //    Destroy(this.gameObject);       //自分のオブジェクトを消す
+                //}
 
+                Destroy(this.gameObject);
 
 
                 break;
